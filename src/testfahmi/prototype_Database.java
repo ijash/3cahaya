@@ -5,6 +5,16 @@
  */
 package testfahmi;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.sql.ResultSet;
+import javax.swing.table.DefaultTableModel;
+import static testfahmi.Testfahmi.CONN_STRING;
+import static testfahmi.Testfahmi.PASSWORD;
+import static testfahmi.Testfahmi.USERNAME;
+
 /**
  *
  * @author Jose
@@ -49,6 +59,11 @@ public class prototype_Database extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel1.setText("               Sub Menu");
         jLabel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        jLabel1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel1MouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -71,6 +86,8 @@ public class prototype_Database extends javax.swing.JFrame {
 
         jPanel5.setBackground(new java.awt.Color(18, 104, 178));
 
+        jTable1.setBackground(new java.awt.Color(255, 255, 255));
+        jTable1.setForeground(new java.awt.Color(0, 0, 0));
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -85,6 +102,11 @@ public class prototype_Database extends javax.swing.JFrame {
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
+            }
+        });
+        jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTable1MouseClicked(evt);
             }
         });
         jScrollPane1.setViewportView(jTable1);
@@ -187,6 +209,14 @@ public class prototype_Database extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
+        
+    }//GEN-LAST:event_jTable1MouseClicked
+
+    private void jLabel1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel1MouseClicked
+loadSampleData();        // TODO add your handling code here:
+    }//GEN-LAST:event_jLabel1MouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -220,6 +250,40 @@ public class prototype_Database extends javax.swing.JFrame {
                 new prototype_Database().setVisible(true);
             }
         });
+    }
+    
+    void loadSampleData()
+    {
+        
+    
+        try{
+            Class.forName("com.mysql.cj.jdbc.Driver").newInstance();
+            Connection conn = DriverManager.getConnection(CONN_STRING,USERNAME,PASSWORD);
+            Statement st = conn.createStatement();
+            ResultSet rs = st.executeQuery("select * from barang");
+                    
+                    while(jTable1.getRowCount() > 0)
+                    {
+                        ((DefaultTableModel)jTable1.getModel()).removeRow(0);
+                    }
+                    int col = rs.getMetaData().getColumnCount();
+                    while (rs.next())
+                    {                
+                        Object [] rows = new Object[col];
+                        for(int i = 1; i<=col; i++)
+                        {
+                            rows[i-1] = rs.getObject(i);
+                        }
+                        ((DefaultTableModel)jTable1.getModel()).insertRow(rs.getRow() -1, rows);
+                    }
+                    rs.close();
+                    st.close();
+                    
+                        
+        }
+        catch (SQLException | ClassNotFoundException | IllegalAccessException | InstantiationException e){
+            e.printStackTrace();
+        }
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
