@@ -22,6 +22,7 @@
   
     <url>http://dev.mysql.com/usingmysql/java/</url>
 
+
     <scm>
         <connection>
             scm:svn:http://svn.mysql.com/svnpublic/connector-j/trunk/connector-j
@@ -35,3 +36,4 @@
     </scm>
 
 </project>
+
