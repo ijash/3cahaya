@@ -13,8 +13,8 @@ public class mySQLConn {
 
     public static final String USERNAME = "root";
     public static final String PASSWORD = "ijasabb35";
-//    public static final String CONN_STRING = "jdbc:mysql://66.96.231.241:3306/fahmi18";
-    public static final String CONN_STRING = "jdbc:mysql://192.168.0.11:3306/fahmi?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
+  // public static final String CONN_STRING = "jdbc:mysql://66.96.231.241:3306/3cahaya";
+    public static final String CONN_STRING = "jdbc:mysql://192.168.0.11:3306/3cahaya?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
 
     public static void main(String[] args) {
         Connection conn = null;

@@ -88,9 +88,6 @@
                   </Border>
                 </Property>
               </Properties>
-              <Events>
-                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jLabel1MouseClicked"/>
-              </Events>
             </Component>
           </SubComponents>
         </Container>
@@ -150,7 +147,7 @@
                         <Column editable="true" title="Merk" type="java.lang.Object"/>
                         <Column editable="true" title="Ragam" type="java.lang.Object"/>
                         <Column editable="true" title="Seri" type="java.lang.Object"/>
-                        <Column editable="true" title="Jumlah" type="java.lang.Object"/>
+                        <Column editable="true" title="Jumlah" type="java.lang.Long"/>
                         <Column editable="true" title="harga" type="java.lang.Object"/>
                         <Column editable="true" title="supplier" type="java.lang.Object"/>
                         <Column editable="true" title="tanggal masuk" type="java.lang.Object"/>
@@ -216,7 +213,7 @@
                     </Property>
                   </Properties>
                   <Events>
-                    <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jTable1MouseClicked"/>
+                    <EventHandler event="focusGained" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="jTable1FocusGained"/>
                   </Events>
                 </Component>
               </SubComponents>
