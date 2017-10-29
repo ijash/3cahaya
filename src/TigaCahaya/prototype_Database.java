@@ -5,15 +5,13 @@
  */
 package TigaCahaya;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.sql.ResultSet;
+import java.sql.*;
 import javax.swing.table.DefaultTableModel;
 import static TigaCahaya.mySQLConn.CONN_STRING;
 import static TigaCahaya.mySQLConn.PASSWORD;
 import static TigaCahaya.mySQLConn.USERNAME;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 
 /**
  *
@@ -21,12 +19,20 @@ import static TigaCahaya.mySQLConn.USERNAME;
  */
 public class prototype_Database extends javax.swing.JFrame {
 
+    DefaultTableModel dm;
+    KeyEvent e;
+    PreparedStatement pst = null;
+    ResultSet rs = null;
+
     /**
      * Creates new form prototype_Database
      */
     public prototype_Database() {
         initComponents();
         setExtendedState(java.awt.Frame.MAXIMIZED_BOTH);
+        jTable1.setAutoCreateRowSorter(true);
+        loadSampleData();
+
     }
 
     /**
@@ -47,12 +53,15 @@ public class prototype_Database extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         jPanel6 = new javax.swing.JPanel();
-        jPanel7 = new javax.swing.JPanel();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
+        jSearch = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        jPanel3.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jPanel3MouseClicked(evt);
+            }
+        });
         jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel4.setBackground(new java.awt.Color(18, 104, 178));
@@ -73,9 +82,9 @@ public class prototype_Database extends javax.swing.JFrame {
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(79, 79, 79)
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(614, Short.MAX_VALUE))
+                .addContainerGap(541, Short.MAX_VALUE))
         );
 
         jPanel3.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 98, 220, 650));
@@ -107,26 +116,17 @@ public class prototype_Database extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        jTable1.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                jTable1FocusGained(evt);
-            }
-        });
         jScrollPane1.setViewportView(jTable1);
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
         jPanel5Layout.setHorizontalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1130, Short.MAX_VALUE)
-            .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 1130, Short.MAX_VALUE))
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 1130, Short.MAX_VALUE)
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 650, Short.MAX_VALUE)
-            .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 650, Short.MAX_VALUE))
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 650, Short.MAX_VALUE)
         );
 
         jPanel3.add(jPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(223, 98, 1130, 650));
@@ -149,7 +149,7 @@ public class prototype_Database extends javax.swing.JFrame {
         jPanel3.add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
         jPanel2.setBackground(new java.awt.Color(117, 179, 226));
-        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED), "Tambah Barang", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.ABOVE_BOTTOM, new java.awt.Font("Tahoma", 1, 12))); // NOI18N
+        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED), "Transaksi", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.ABOVE_BOTTOM, new java.awt.Font("Tahoma", 1, 12))); // NOI18N
         jPanel2.setName(""); // NOI18N
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
@@ -166,7 +166,7 @@ public class prototype_Database extends javax.swing.JFrame {
         jPanel3.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 0, 120, -1));
 
         jPanel6.setBackground(new java.awt.Color(117, 179, 226));
-        jPanel6.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED), "Barang Retur", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.ABOVE_BOTTOM, new java.awt.Font("Tahoma", 1, 12))); // NOI18N
+        jPanel6.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED), "Pemasok", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.ABOVE_BOTTOM, new java.awt.Font("Tahoma", 1, 12))); // NOI18N
         jPanel6.setName(""); // NOI18N
 
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
@@ -182,16 +182,17 @@ public class prototype_Database extends javax.swing.JFrame {
 
         jPanel3.add(jPanel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 0, 120, -1));
 
-        jPanel7.setBackground(new java.awt.Color(117, 179, 226));
-        jPanel7.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Line_50pxr.png"))); // NOI18N
-        jPanel7.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 0, 40, 40));
-
-        jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Search_52px.png"))); // NOI18N
-        jPanel7.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, 40, 40));
-
-        jPanel3.add(jPanel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(820, 60, 200, 40));
+        jSearch.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jSearchMouseClicked(evt);
+            }
+        });
+        jSearch.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jSearchKeyPressed(evt);
+            }
+        });
+        jPanel3.add(jSearch, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 60, 190, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -212,9 +213,42 @@ public class prototype_Database extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jTable1FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTable1FocusGained
-        loadSampleData();
-    }//GEN-LAST:event_jTable1FocusGained
+    private void jPanel3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel3MouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jPanel3MouseClicked
+
+    private void jSearchKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jSearchKeyPressed
+        int keyCode = evt.getKeyCode();
+
+        if (keyCode == KeyEvent.VK_ENTER) {
+            
+        
+        try {
+            
+            Class.forName("com.mysql.cj.jdbc.Driver").newInstance();
+            Connection conn = DriverManager.getConnection(CONN_STRING, USERNAME, PASSWORD);
+            String Sql = "Select * from barang where qty =?";
+
+            pst = conn.prepareStatement(Sql);
+            pst.setString(1, jSearch.getText());
+            rs = pst.executeQuery();
+            if (rs.next()) {
+                System.out.println("Berhasil");
+            } else {
+                System.out.println("Salah^");
+            }
+
+        } catch (Exception e) {
+
+        }
+        }
+        
+
+    }//GEN-LAST:event_jSearchKeyPressed
+
+    private void jSearchMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jSearchMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jSearchMouseClicked
 
     /**
      * @param args the command line arguments
@@ -250,53 +284,44 @@ public class prototype_Database extends javax.swing.JFrame {
             }
         });
     }
-    
-    void loadSampleData()
-    {
-        
-    
-        try{
+
+    void loadSampleData() {
+
+        try {
             Class.forName("com.mysql.cj.jdbc.Driver").newInstance();
-            Connection conn = DriverManager.getConnection(CONN_STRING,USERNAME,PASSWORD);
+            Connection conn = DriverManager.getConnection(CONN_STRING, USERNAME, PASSWORD);
             Statement st = conn.createStatement();
             ResultSet rs = st.executeQuery("select * from barang");
-                    
-                    while(jTable1.getRowCount() > 0)
-                    {
-                        ((DefaultTableModel)jTable1.getModel()).removeRow(0);
-                    }
-                    int col = rs.getMetaData().getColumnCount();
-                    while (rs.next())
-                    {                
-                        Object [] rows = new Object[col];
-                        for(int i = 1; i<=col; i++)
-                        {
-                            rows[i-1] = rs.getObject(i);
-                        }
-                        ((DefaultTableModel)jTable1.getModel()).insertRow(rs.getRow() -1, rows);
-                    }
-                    rs.close();
-                    st.close();
-                    
-                        
-        }
-        catch (SQLException | ClassNotFoundException | IllegalAccessException | InstantiationException e){
+
+            while (jTable1.getRowCount() > 0) {
+                ((DefaultTableModel) jTable1.getModel()).removeRow(0);
+            }
+            int col = rs.getMetaData().getColumnCount();
+            while (rs.next()) {
+                Object[] rows = new Object[col];
+                for (int i = 1; i <= col; i++) {
+                    rows[i - 1] = rs.getObject(i);
+                }
+                ((DefaultTableModel) jTable1.getModel()).insertRow(rs.getRow() - 1, rows);
+            }
+            rs.close();
+            st.close();
+
+        } catch (SQLException | ClassNotFoundException | IllegalAccessException | InstantiationException e) {
             e.printStackTrace();
         }
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
-    private javax.swing.JPanel jPanel7;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTextField jSearch;
     private javax.swing.JTable jTable1;
     // End of variables declaration//GEN-END:variables
 }
