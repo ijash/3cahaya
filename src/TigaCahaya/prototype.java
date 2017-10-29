@@ -24,7 +24,7 @@ public class prototype extends javax.swing.JFrame {
     public prototype() {
         
         initComponents();
-        jPanel1.setBackground(new Color (255,255,255,255) );
+//        jPanel1.setBackground(new Color (255,255,255,255) );
         
         
         
@@ -117,7 +117,8 @@ public class prototype extends javax.swing.JFrame {
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(12, 75, 127));
-        jLabel2.setText("-");
+        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/minimize_icon.png"))); // NOI18N
+        jLabel2.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
         jLabel2.addAncestorListener(new javax.swing.event.AncestorListener() {
             public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
             }
@@ -132,11 +133,11 @@ public class prototype extends javax.swing.JFrame {
                 jLabel2MouseClicked(evt);
             }
         });
-        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(254, 4, 20, 10));
+        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 10, 20, 10));
 
         jLabel5.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(12, 75, 127));
-        jLabel5.setText("X");
+        jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/close_icon.png"))); // NOI18N
         jLabel5.addAncestorListener(new javax.swing.event.AncestorListener() {
             public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
             }
@@ -151,12 +152,12 @@ public class prototype extends javax.swing.JFrame {
                 jLabel5MouseClicked(evt);
             }
         });
-        jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 4, -1, 10));
+        jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 10, -1, 10));
 
-        jLabel4.setBackground(new java.awt.Color(18, 104, 178));
         jLabel4.setForeground(new java.awt.Color(18, 104, 178));
+        jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/master_logo.png"))); // NOI18N
-        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 24, -1, -1));
+        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 20, -1, 180));
 
         frameDrag.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
             public void mouseDragged(java.awt.event.MouseEvent evt) {
@@ -170,7 +171,7 @@ public class prototype extends javax.swing.JFrame {
         });
         jPanel1.add(frameDrag, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, -2, 300, 20));
 
-        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, 180));
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -178,36 +179,6 @@ public class prototype extends javax.swing.JFrame {
     private void Field_passwordMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Field_passwordMouseClicked
 Field_password.setText("");
     }//GEN-LAST:event_Field_passwordMouseClicked
-
-    private void jLabel2AncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_jLabel2AncestorAdded
-    
-    }//GEN-LAST:event_jLabel2AncestorAdded
-
-    private void jLabel5AncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_jLabel5AncestorAdded
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jLabel5AncestorAdded
-
-    private void jLabel5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel5MouseClicked
-       System.exit(0);
-    }//GEN-LAST:event_jLabel5MouseClicked
-
-    private void jLabel2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel2MouseClicked
-       this.setState(JFrame.ICONIFIED);
-    }//GEN-LAST:event_jLabel2MouseClicked
-
-    private void frameDragMouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_frameDragMouseDragged
-        int x = evt.getXOnScreen();
-        int y = evt.getYOnScreen();
-        
-        this.setLocation(x - xMouse,y - yMouse);
-        
-        
-    }//GEN-LAST:event_frameDragMouseDragged
-
-    private void frameDragMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_frameDragMousePressed
-        xMouse = evt.getX();
-        yMouse = evt.getY();
-    }//GEN-LAST:event_frameDragMousePressed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         
@@ -241,6 +212,34 @@ Field_password.setText("");
     private void Field_passwordFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_Field_passwordFocusGained
         Field_password.setText("");
     }//GEN-LAST:event_Field_passwordFocusGained
+
+    private void frameDragMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_frameDragMousePressed
+        xMouse = evt.getX();
+        yMouse = evt.getY();
+    }//GEN-LAST:event_frameDragMousePressed
+
+    private void frameDragMouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_frameDragMouseDragged
+        int x = evt.getXOnScreen();
+        int y = evt.getYOnScreen();
+
+        this.setLocation(x - xMouse,y - yMouse);
+    }//GEN-LAST:event_frameDragMouseDragged
+
+    private void jLabel5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel5MouseClicked
+        System.exit(0);
+    }//GEN-LAST:event_jLabel5MouseClicked
+
+    private void jLabel5AncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_jLabel5AncestorAdded
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jLabel5AncestorAdded
+
+    private void jLabel2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel2MouseClicked
+        this.setState(JFrame.ICONIFIED);
+    }//GEN-LAST:event_jLabel2MouseClicked
+
+    private void jLabel2AncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_jLabel2AncestorAdded
+
+    }//GEN-LAST:event_jLabel2AncestorAdded
 
     /**
      * @param args the command line arguments
