@@ -582,7 +582,7 @@ public class ResultSetMetaData implements java.sql.ResultSetMetaData {
 	}
 
 	/**
-	 * Will a write on this column definately succeed?
+	 * Will a write on this column definitely succeed?
 	 * 
 	 * @param column
 	 *            the first column is 1, the second is 2, etc..
