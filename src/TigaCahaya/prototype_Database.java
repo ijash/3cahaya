@@ -12,6 +12,8 @@ import static TigaCahaya.mySQLConn.PASSWORD;
 import static TigaCahaya.mySQLConn.USERNAME;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import javax.swing.RowFilter;
+import javax.swing.table.TableRowSorter;
 
 /**
  *
@@ -191,6 +193,9 @@ public class prototype_Database extends javax.swing.JFrame {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 jSearchKeyPressed(evt);
             }
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jSearchKeyReleased(evt);
+            }
         });
         jPanel3.add(jSearch, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 60, 190, -1));
 
@@ -233,9 +238,9 @@ public class prototype_Database extends javax.swing.JFrame {
             pst.setString(1, jSearch.getText());
             rs = pst.executeQuery();
             if (rs.next()) {
-                System.out.println("Berhasil");
+                Sql = "Select * from barang where qty = jSearch";
             } else {
-                System.out.println("Salah^");
+                System.out.println("Kosong");
             }
 
         } catch (Exception e) {
@@ -246,9 +251,23 @@ public class prototype_Database extends javax.swing.JFrame {
 
     }//GEN-LAST:event_jSearchKeyPressed
 
+    private void  filter(String query)
+    {
+        TableRowSorter<DefaultTableModel> tr = new TableRowSorter<DefaultTableModel>(dm);
+        jTable1.setRowSorter(tr);
+        
+        tr.setRowFilter(RowFilter.regexFilter(query));
+    }
+    
     private void jSearchMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jSearchMouseClicked
         // TODO add your handling code here:
     }//GEN-LAST:event_jSearchMouseClicked
+
+    private void jSearchKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jSearchKeyReleased
+       String query = jSearch.getText().toLowerCase();
+       
+        filter(query);
+    }//GEN-LAST:event_jSearchKeyReleased
 
     /**
      * @param args the command line arguments
