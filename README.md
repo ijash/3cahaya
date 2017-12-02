@@ -1,4 +1,4 @@
-# 3cahaya
+# Program Inventori Toko Listrik Tiga Cahaya
 
 
 1. Semua data yang diluar program java masuk ke folder res
